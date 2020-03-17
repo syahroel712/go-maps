@@ -67,10 +67,6 @@
                             </script>";
                         }
                     }
-
-
-
-
                     ?>
 
                 </div>
@@ -81,6 +77,57 @@
 
 <script src="http://maps.googleapis.com/maps/api/js"></script>
 <script>
+    // variabel global marker
+    var marker;
+
+    function taruhMarker(peta, posisiTitik) {
+
+        if (marker) {
+            // pindahkan marker
+            marker.setPosition(posisiTitik);
+        } else {
+            // buat marker baru
+            marker = new google.maps.Marker({
+                position: posisiTitik,
+                map: peta
+            });
+        }
+
+        // isi nilai koordinat ke form
+        document.getElementById("latitude_tempat").value = posisiTitik.lat();
+        document.getElementById("longitude_tempat").value = posisiTitik.lng();
+
+    }
+
+    function initialize() {
+        var propertiPeta = {
+            center: new google.maps.LatLng(-0.2288894365365062, 100.63173882695315),
+            zoom: 18,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var peta = new google.maps.Map(document.getElementById("googleMap"), propertiPeta);
+
+        // membuat Marker
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(-0.2288894365365062, 100.63173882695315),
+            map: peta
+        });
+
+        // even listner ketika peta diklik
+        google.maps.event.addListener(peta, 'click', function(event) {
+            marker.setMap(null);
+
+            taruhMarker(this, event.latLng);
+        });
+
+    }
+
+
+    // event jendela di-load  
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+<!-- <script>
     var marker;
 
     function taruhMarker(peta, posisiTitik) {
@@ -114,17 +161,17 @@
         // membuat Marker
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(-0.952553, 100.389385),
-            map: peta
+            map: peta,
+            draggable: true
         });
 
-        // even listner ketika peta diklik
-        google.maps.event.addListener(peta, 'click', function(event) {
-            taruhMarker(this, event.latLng);
-        });
+        marker.addListener("drag", function() {
+            console.log("angek se ma")
+        })
 
 
     }
 
     // event jendela di-load  
     google.maps.event.addDomListener(window, 'load', initialize);
-</script>
+</script> -->
