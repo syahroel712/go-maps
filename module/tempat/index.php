@@ -8,7 +8,7 @@
             <div class="table-responsive">
                 <a href="?page=module/tempat/tambah" class="btn btn-primary ">Tambah Data</a>
                 <br><br>
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="example" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th width="10px">No</th>
