@@ -1,51 +1,46 @@
 <div class="container">
+
     <div class="row">
-        <div class="col-md-12 mb-4 mt-4">
-            <h1>Input Tempat</h1>
+
+        <div class="col-md-12 mb-5 mt-5">
+            <h2>Data Jarak Tempat</h2>
             <hr>
-            <div class="row">
+            <div class="table-responsive">
+                <a href="?page=module/jarak_tempat/tambah" class="btn btn-primary ">Tambah Data</a>
+                <br><br>
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th width="10px">No</th>
+                            <th>Nama Tempat</th>
+                            <th>Jarak Tempat</th>
+                            <th>Waktu Tempuh</th>
+                            <th width="131px">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $data_tempat = $DB->query("SELECT * FROM tb_jarak_tempat JOIN tb_tempat ON tb_jarak_tempat.id_tempat = tb_tempat.id_tempat");
+                        foreach ($data_tempat as $no => $data) {
+                        ?>
+                            <tr>
+                                <td><?php echo $data['id_tempat']; ?></td>
+                                <td><?php echo $data['nama_tempat']; ?></td>
+                                <td><?php echo $data['jarak_tempat']; ?></td>
+                                <td><?php echo $data['waktu_tempuh']; ?></td>
 
-                <div class="col-md-6">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15957.067476689432!2d100.3894529!3d-0.9526198!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xa4a89deaa38dc47a!2sCV.%20Mediatama%20Web%20Indonesia%20-%20Jasa%20Pembuatan%20dan%20Kursus%20Website%20di%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1584408212488!5m2!1sid!2sid" frameborder="0" style="border:0; width:100%; height:450px;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-                </div>
-
-                <div class="col-md-6">
-                    <form method="POST">
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <label>Nama Tempat</label>
-                                <input name="nama_tempat" type="text" class="form-control" autofocus="autofocus">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <label>Deskripsi Tempat</label>
-                                <textarea name="deskripsi_tempat" class="form-control" cols="30" rows="6"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <label>Alamat Tempat</label>
-                                <textarea name="alamat_tempat" class="form-control" cols="30" rows="6"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <label>Latitude</label>
-                                <input name="latitude_tempat" type="text" class="form-control" autofocus="autofocus">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <label>Longitude</label>
-                                <input name="longitude_tempat" type="text" class="form-control" autofocus="autofocus">
-                            </div>
-                        </div>
-
-                        <button name="login" class="btn btn-primary btn-block">Login</button>
-                    </form>
-                </div>
+                                <td>
+                                    <a href="index.php?page=module/jarak_tempat/edit&id=<?php echo $data['id_jarak_tempat'];  ?> " class="btn btn-success btn-sm">Edit</a>
+                                    <a href="index.php?page=module/jarak_tempat/hapus&id=<?php echo $data['id_jarak_tempat'];  ?> " onclick="return confirm('Yakin hapus data ini?');" class="btn btn-danger btn-sm">Hapus</a>
+                                </td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div>
+
     </div>
 </div>
