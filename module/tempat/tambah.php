@@ -10,7 +10,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <form method="POST">
+                    <form method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <div class="form-label-group">
                                 <label>Nama Tempat</label>
@@ -42,8 +42,37 @@
                             </div>
                         </div>
 
-                        <button name="login" class="btn btn-primary btn-block">Login</button>
+                        <button name="simpan" class="btn btn-primary btn-block">SIMPAN</button>
                     </form>
+
+                    <?php
+                    if (isset($_POST['simpan'])) {
+                        $data = array(
+                            ":nama_tempat" => $_POST['nama_tempat'],
+                            ":deskripsi_tempat" => $_POST['deskripsi_tempat'],
+                            ":alamat_tempat" => $_POST['alamat_tempat'],
+                            ":latitude_tempat" => $_POST['latitude_tempat'],
+                            ":longitude_tempat" => $_POST['longitude_tempat'],
+                        );
+                        // var_dump($data);
+                        // exit;
+                        $simpan = $DB->query("INSERT INTO tb_tempat(nama_tempat, deskripsi_tempat, alamat_tempat, latitude_tempat, longitude_tempat) VALUES (:nama_tempat, :deskripsi_tempat, :alamat_tempat, :latitude_tempat, :longitude_tempat)", $data);
+                        if ($simpan) {
+                            echo "<script>alert('Data Disimpan');
+                            window.location='index.php?page=module/tempat/index';
+                            </script>";
+                        } else {
+                            echo "<script>alert('Data Tidak Disimpan');
+                            window.location='index.php?page=module/tempat/index';
+                            </script>";
+                        }
+                    }
+
+
+
+
+                    ?>
+
                 </div>
             </div>
         </div>

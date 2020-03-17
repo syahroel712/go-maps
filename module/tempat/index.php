@@ -3,7 +3,7 @@
     <div class="row">
 
         <div class="col-md-12 mb-5 mt-5">
-            <h2>Data Gejala</h2>
+            <h2>Data Tempat</h2>
             <hr>
             <div class="table-responsive">
                 <a href="?page=module/tempat/tambah" class="btn btn-primary ">Tambah Data</a>
@@ -34,8 +34,8 @@
                                 <td><?php echo $data['longitude_tempat']; ?></td>
 
                                 <td>
-                                    <a href="index.php?page=module/Gejala/edit&id=G01" class="btn btn-warning btn-sm">Edit</a>
-                                    <a href="index.php?page=module/Gejala/hapus&id=G01" class="btn btn-danger btn-sm">Hapus</a>
+                                    <a href="index.php?page=module/tempat/edit&id=<?php echo $data['id_tempat'];  ?> " class="btn btn-success btn-sm">Edit</a>
+                                    <a href="index.php?page=module/tempat/hapus&id=<?php echo $data['id_tempat'];  ?> " onclick="return confirm('Yakin hapus data ini?');" class="btn btn-danger btn-sm">Hapus</a>
                                 </td>
                             </tr>
                         <?php
