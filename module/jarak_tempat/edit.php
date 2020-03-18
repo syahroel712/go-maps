@@ -17,17 +17,12 @@ $data_tempat = $DB->query("SELECT * FROM tb_jarak_tempat WHERE id_jarak_tempat =
             <h2>Edit Jarak Tempat</h2>
             <hr>
             <div class="row">
-
-                <div class="col-md-6">
-                    <div id="googleMap" style="width:100%;height:380px;"></div>
-                </div>
-
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <form method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <div class="form-group">
                                 <div class="form-label-group">
-                                    <input name="id_jarak_tempat" type="text" class="form-control" autofocus="autofocus" value="<?php echo $data_tempat['id_jarak_tempat'] ?>" placeholder="Dalam satuan kilometer">
+                                    <input name="id_jarak_tempat" type="hidden" class="form-control" autofocus="autofocus" value="<?php echo $data_tempat['id_jarak_tempat'] ?>" placeholder="Dalam satuan kilometer">
                                 </div>
                             </div>
                         </div>
@@ -77,55 +72,3 @@ $data_tempat = $DB->query("SELECT * FROM tb_jarak_tempat WHERE id_jarak_tempat =
         </div>
     </div>
 </div>
-<script src="http://maps.googleapis.com/maps/api/js"></script>
-<script>
-    // variabel global marker
-    var marker;
-
-    function taruhMarker(peta, posisiTitik) {
-
-        if (marker) {
-            // pindahkan marker
-            marker.setPosition(posisiTitik);
-        } else {
-            // buat marker baru
-            marker = new google.maps.Marker({
-                position: posisiTitik,
-                map: peta
-            });
-        }
-
-        // isi nilai koordinat ke form
-        document.getElementById("latitude_tempat").value = posisiTitik.lat();
-        document.getElementById("longitude_tempat").value = posisiTitik.lng();
-
-    }
-
-    function initialize() {
-        var propertiPeta = {
-            center: new google.maps.LatLng(-0.2288894365365062, 100.63173882695315),
-            zoom: 18,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-
-        var peta = new google.maps.Map(document.getElementById("googleMap"), propertiPeta);
-
-        // membuat Marker
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(-0.2288894365365062, 100.63173882695315),
-            map: peta
-        });
-
-        // even listner ketika peta diklik
-        google.maps.event.addListener(peta, 'click', function(event) {
-            marker.setMap(null);
-
-            taruhMarker(this, event.latLng);
-        });
-
-    }
-
-
-    // event jendela di-load  
-    google.maps.event.addDomListener(window, 'load', initialize);
-</script>
