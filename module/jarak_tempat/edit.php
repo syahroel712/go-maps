@@ -16,6 +16,9 @@ $data_tempat = $DB->query("SELECT * FROM tb_jarak_tempat WHERE id_jarak_tempat =
         <div class="col-md-12 mb-4 mt-4">
             <h2>Edit Jarak Tempat</h2>
             <hr>
+            <button onclick="goBack()" class="btn btn-info">Kembali</button>
+            <br>
+            <br>
             <div class="row">
                 <div class="col-md-12">
                     <form method="POST" enctype="multipart/form-data">

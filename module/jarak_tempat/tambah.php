@@ -12,6 +12,9 @@ $data_tempat = $DB->query("SELECT * FROM tb_tempat WHERE id_tempat = :id_tempat 
         <div class="col-md-12 mb-4 mt-4">
             <h2>Input Jarak Tempat <?php echo $data_tempat['nama_tempat']  ?></h2>
             <hr>
+            <button onclick="goBack()" class="btn btn-info">Kembali</button>
+            <br>
+            <br>
             <div class="row">
 
                 <div class="col-md-6">

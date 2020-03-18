@@ -14,8 +14,11 @@ $data_tempat = $DB->query("SELECT * FROM tb_tempat WHERE id_tempat = :id_tempat 
         <div class="col-md-12 mb-5 mt-5">
             <h2>Data Jarak Tempat <?php echo $data_tempat['nama_tempat']  ?> </h2>
             <hr>
+
             <div class="table-responsive">
+
                 <a href="?page=module/jarak_tempat/tambah&id=<?php echo $_SESSION['id_tempat'];  ?>" class="btn btn-primary ">Tambah Data</a>
+                <button onclick="goBack()" class="btn btn-info">Kembali</button>
                 <br><br>
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>

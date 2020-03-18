@@ -3,6 +3,9 @@
         <div class="col-md-12 mb-4 mt-4">
             <h2>Input Tempat</h2>
             <hr>
+            <button onclick="goBack()" class="btn btn-info">Kembali</button>
+            <br>
+            <br>
             <div class="row">
 
                 <div class="col-md-6">
