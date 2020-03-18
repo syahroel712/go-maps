@@ -17,7 +17,7 @@
                             <th>Alamat</th>
                             <th>Latitude</th>
                             <th>Longitude</th>
-                            <th width="131px">Aksi</th>
+                            <th width="190px">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,7 +34,8 @@
                                 <td><?php echo $data['longitude_tempat']; ?></td>
 
                                 <td>
-                                    <a href="index.php?page=module/tempat/edit&id=<?php echo $data['id_tempat'];  ?> " class="btn btn-success btn-sm">Edit</a>
+                                    <a href="index.php?page=module/tempat/jarak_terkait&id=<?php echo $data['id_tempat'];  ?> " class="btn btn-success btn-sm">Jarak Terkait</a>
+                                    <a href="index.php?page=module/tempat/edit&id=<?php echo $data['id_tempat'];  ?> " class="btn btn-warning btn-sm">Edit</a>
                                     <a href="index.php?page=module/tempat/hapus&id=<?php echo $data['id_tempat'];  ?> " onclick="return confirm('Yakin hapus data ini?');" class="btn btn-danger btn-sm">Hapus</a>
                                 </td>
                             </tr>
