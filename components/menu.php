@@ -12,6 +12,9 @@
                 <li class="nav-item ">
                     <a class="nav-link" href="index.php?page=module/tempat/index" style="color: white">Tempat</a>
                 </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="index.php?page=module/caritempat/index" style="color: white">Cari Tempat</a>
+                </li>
                 <!-- <li class="nav-item ">
                     <a class="nav-link" href="index.php?page=module/jarak_tempat/index" style="color: white">Jarak Tempat</a>
                 </li> -->
