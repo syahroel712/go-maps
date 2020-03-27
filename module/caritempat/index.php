@@ -39,6 +39,7 @@
                             </select>
                         </div>
                     </div>
+                    <button name="simpan" class="btn btn-primary btn-block">CARI</button>
                 </form>
             </div>
         </div>
