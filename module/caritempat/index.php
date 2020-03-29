@@ -10,11 +10,11 @@
                     <div class="form-group">
                         <div class="form-label-group">
                             <label>Nama Tempat Awal</label>
-                            <select name="id_tujuan" id="" class="form-control">
+                            <select name="id_awal" id="" class="form-control">
                                 <option value="">Pilih Tempat</option>
                                 ?>
                                 <?php
-                                $data_tempat = $DB->query("SELECT * FROM tb_tempat");
+                                $data_tempat = $DB->query("SELECT * FROM tb_tempat ORDER BY nama_tempat ASC");
                                 foreach ($data_tempat as $no => $data) {
                                 ?>
                                     <option value="<?php echo $data['id_tempat'] ?>"><?php echo $data['nama_tempat'] ?></option>
@@ -27,9 +27,8 @@
                             <label>Nama Tempat Tujuan</label>
                             <select name="id_tujuan" id="" class="form-control">
                                 <option value="">Pilih Tempat</option>
-                                ?>
                                 <?php
-                                $data_tempat = $DB->query("SELECT * FROM tb_tempat");
+                                $data_tempat = $DB->query("SELECT * FROM tb_tempat ORDER BY nama_tempat ASC");
                                 foreach ($data_tempat as $no => $data) {
                                 ?>
                                     <option value="<?php echo $data['id_tempat'] ?>"><?php echo $data['nama_tempat'] ?></option>
