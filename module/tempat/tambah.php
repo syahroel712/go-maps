@@ -7,8 +7,8 @@
             <br>
             <br>
             <div class="row">
-
                 <div class="col-md-6">
+                    <p><b><i>*Klik pada peta untuk menggeser marker</i></b></p>
                     <div id="googleMap" style="width:100%;height:380px;"></div>
                 </div>
 
@@ -78,7 +78,7 @@
     </div>
 </div>
 
-<script src="http://maps.googleapis.com/maps/api/js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSnFipxaBhQcKE_i8itckeTlY3cbOh9TE"></script>
 <script>
     // variabel global marker
     var marker;

@@ -18,7 +18,7 @@ $data_tempat = $DB->query("SELECT * FROM tb_tempat WHERE id_tempat = :id_tempat 
             <div class="table-responsive">
 
                 <a href="?page=module/jarak_tempat/tambah&id=<?php echo $_SESSION['id_tempat'];  ?>" class="btn btn-primary ">Tambah Data</a>
-                <button onclick="goBack()" class="btn btn-info">Kembali</button>
+                <a href="index.php?page=module/tempat/index" class="btn btn-info">Kembali</a>
                 <br><br>
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
@@ -38,8 +38,8 @@ $data_tempat = $DB->query("SELECT * FROM tb_tempat WHERE id_tempat = :id_tempat 
                             <tr>
                                 <td><?php echo $no + 1; ?></td>
                                 <td><?php echo $data['nama_tempat']; ?></td>
-                                <td><?php echo $data['jarak_tempat']; ?></td>
-                                <td><?php echo $data['waktu_tempuh']; ?></td>
+                                <td><?php echo $data['jarak_tempat']." Km"; ?></td>
+                                <td><?php echo $data['waktu_tempuh']." Menit"; ?></td>
 
                                 <td>
                                     <a href="index.php?page=module/jarak_tempat/edit&id=<?php echo $data['id_jarak_tempat'];  ?> " class="btn btn-success btn-sm">Edit</a>

@@ -8,12 +8,13 @@ $data_tempat = $DB->query("SELECT * FROM tb_tempat WHERE id_tempat = :id_tempat 
         <div class="col-md-12 mb-4 mt-4">
             <h2>Edit Tempat</h2>
             <hr>
-            <button onclick="goBack()" class="btn btn-info">Kembali</button>
+            <a href="index.php?page=module/tempat/index" class="btn btn-info">Kembali</a>
             <br>
             <br>
             <div class="row">
 
                 <div class="col-md-6">
+                    <p><b><i>*Klik pada peta untuk menggeser marker</i></b></p>
                     <div id="googleMap" style="width:100%;height:500px;"></div>
                 </div>
 
