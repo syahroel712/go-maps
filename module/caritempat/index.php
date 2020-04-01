@@ -42,46 +42,100 @@
                 <button name="simpan" class="btn btn-primary btn-block">CARI</button>
             </div>
         </div>
-        <div class="col-12 mb-5 mt-5">
-          <div id="hasil_pencarian" style="width:100%;height:500px;"></div>
+        <div class="col-12 mb-5 mt-5" id="pencarian">
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#tampilan_peta">Tampilan Peta</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#tampilan_jaringan">Tampilan Jaringan</a>
+            </li>
+          </ul>
+        
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div id="tampilan_peta" class="container tab-pane active"><br>
+              <h3>Tampilan Rute Dengan Peta</h3>
+              <div id="hasil_pencarian" style="width:100%;height:500px;border: 1px solid lightgray;"></div>
+            </div>
+            <div id="tampilan_jaringan" class="container tab-pane fade"><br>
+              <h3>Tampilan Rute Dengan Jaringan</h3>
+              <div id="hasil_jaringan" style="width:100%;height:500px;border: 1px solid lightgray;"></div>
+            </div>
+          </div>
+          
         </div>
     </div>
 </div>
 <script src="assets/js/axios.min.js"></script>
-<script src="http://maps.googleapis.com/maps/api/js"></script>
+<script src="assets/js/peta.js"></script>
 <script>
-  var list_tempat = <?=json_encode($DB->query("SELECT * FROM tb_tempat")->fetchAll(PDO::FETCH_ASSOC))?>;
+  var list_tempat = <?=json_encode($DB->query("SELECT * FROM tb_tempat ORDER BY nama_tempat ASC")->fetchAll(PDO::FETCH_ASSOC))?>;
   var banyak_tempat = list_tempat.length;
   var list_marker = [];
-  var propertiPeta = {
-    center: new google.maps.LatLng(-0.2288894365365062, 100.63173882695315),
-    zoom: 18,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-  var bounds;
-
-  var peta;
   
-  function initialize() {
-    bounds = new google.maps.LatLngBounds();
-    peta = new google.maps.Map(document.getElementById("hasil_pencarian"), propertiPeta);
+  function initMap(dom) {
+    //variabel penampung peta
+    map = L.map(dom, {layers: [OpenStreetMap]}).setView(posisi, zoom); // set layer awal langsung ke OpenStreetMap
+    
+    L.control.layers(penyediaPeta).addTo(map); // tambahkan semua layer penyedia peta ke instance peta sekarang
+          
+    map.addLayer(penyediaPeta['Mapbox Streets']);
+    
     // buat marker dan tampilkan dipeta
     for(var x = 0; x < banyak_tempat; x++)
     {
-      list_marker[x] = new google.maps.Marker({
-        position: new google.maps.LatLng(list_tempat[x].latitude_tempat, list_tempat[x].longitude_tempat),
-        map: peta,
-        label: list_tempat[x].nama_tempat
-      });
+        list_marker[x] = L.marker([list_tempat[x].latitude_tempat, list_tempat[x].longitude_tempat])
+                          .bindPopup(list_tempat[x].nama_tempat)
+                          .addTo(map);
     }
-    bounds.extend(list_marker[x]);
-    peta.fitBounds(bounds);
+    
   }
   
   function resetHasilPencarian()
   {
     document.getElementById("hasil_pencarian").innerHTML = "";
   }
+  
+  function tampilkanRuteJaringan(titik, titik_hubungan, dom)
+  {
+    //~ var nodes = new vis.DataSet([
+      //~ {id: 1, label: 'Node 1'},
+      //~ {id: 2, label: 'Node 2'},
+      //~ {id: 3, label: 'Node 3'},
+      //~ {id: 4, label: 'Node 4'},
+      //~ {id: 5, label: 'Node 5'}
+    //~ ]);
+  
+    //~ // create an array with edges
+    //~ var edges = new vis.DataSet([
+      //~ {from: 1, to: 3},
+      //~ {from: 1, to: 2},
+      //~ {from: 2, to: 4},
+      //~ {from: 2, to: 5},
+      //~ {from: 3, to: 3}
+    //~ ]);
+    var nodes = new vis.DataSet(titik);
+  
+    // create an array with edges
+    var edges = new vis.DataSet(titik_hubungan);
+  
+    // create a network
+    var container = document.getElementById(dom);
+    var data = {
+      nodes: nodes,
+      edges: edges
+    };
+    var options = {};
+    var network = new vis.Network(container, data, options);
+  }
+  
+  // menampilkan rute dengan visual jaringan
+    // create an array with nodes
+    
+  // akhir dari menampilkan rute dengan visual jaringan
+  
+  
   function cariRute(id_awal, id_tujuan)
   {
     document.getElementsByName("simpan")[0].disabled = true;
@@ -93,13 +147,44 @@
         {
           alert("Hasil pencarian rute tidak ditemukan...");
         }
-        else
+        var titik = [];
+        var titik_hubungan = [];
+        var rute = [];
+        var banyak_rute = data.rute.length;
+        for(var x = 0; x < banyak_rute; x++)
         {
-          //~ document.getElementById("hasil_pencarian").innerHTML = res.data;
+          
+          // menentukan titik awal dan titik akhir daripada peta
+          if(x == 0 || x == (banyak_rute - 1))
+          {
+            rute.push(L.latLng(data.rute[x].latitude_tempat, data.rute[x].longitude_tempat));
+          }
+          
+          // tambah lokasi sebagai titik untuk ditampilkan dalam mode jaringan
+          titik.push({id: data.rute[x].id_tempat, label: data.rute[x].nama_tempat});
+          
+          // membuat hubungan titik
+          if(x != 0)
+          {
+            titik_hubungan.push({from: data.rute[x-1].id_tempat, to: data.rute[x].id_tempat, arrows:'from'});
+          }
+          
         }
+        
+        // tampilkan semua titik dalam bentuk jaringan
+        tampilkanRuteJaringan(titik, titik_hubungan, 'hasil_jaringan');
+        
+        // bagian menampilkan rute pada peta
+        L.Routing.control({
+          waypoints: rute,
+          router: L.Routing.mapbox(bingMaps.bingMapsKey)
+        }).addTo(map);
+        
+        window.location.hash = '#pencarian';
       })
       .catch(function(err)
       {
+        console.log(err);
         alert("Tidak dapat melakukan pencarian rute. Silahkan ulangi lagi...")
       })
       .finally(function(){
@@ -120,5 +205,8 @@
     }
   })
    
-  google.maps.event.addDomListener(window, 'load', initialize);
+  
+  initMap("hasil_pencarian");
+  
+  
 </script>
