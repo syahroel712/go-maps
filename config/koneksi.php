@@ -9,7 +9,7 @@ $DB = new Medoo([
     'database_name' => 'db_prim',
     'server' => 'localhost',
     'username' => 'root',
-    'password' => ''
+    'password' => 'mysql'
 ]);
 
 /*
