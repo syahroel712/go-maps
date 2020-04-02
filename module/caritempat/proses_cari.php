@@ -11,6 +11,7 @@
   
   $daftar_tempat[] = $id_awal; // titik awal ditambahkan ke daftar tempat sebagai start
   $id_tempat_sekarang = $id_awal; // menampung id_tempat yang sedang dipilih untuk diproses
+  
   $cari_titik = $DB->get("tb_jarak_tempat", ["id_tujuan"], ["id_tempat" => $id_tempat_sekarang, "id_tujuan[!]" => $daftar_tempat, "ORDER" => ["jarak_tempat" => "ASC"]]);
   while(!empty($cari_titik))
   {

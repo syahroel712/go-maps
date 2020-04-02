@@ -211,25 +211,45 @@
       var waypts = []; // titik yang akan dilalui
       var titik_awal = null;
       var titik_akhir = null;
-      
       for(var x = 0; x < list_koordinat.length; x++)
       {
         // set titik awal dan titik akhir saat looping
         if(x == 0)
         {
           // masukkan titik awal
-          titik_awal = cariMarker(list_koordinat[x].id_tempat);
+          titik_awal = new google.maps.LatLng(parseFloat(list_koordinat[x].latitude_tempat), parseFloat(list_koordinat[x].longitude_tempat));
         }
         else if(x == (list_koordinat.length - 1))
         {
           // masukan titik akhir
-          titik_akhir = cariMarker(list_koordinat[x].id_tempat);
+          titik_akhir = new google.maps.LatLng(parseFloat(list_koordinat[x].latitude_tempat), parseFloat(list_koordinat[x].longitude_tempat));
         }
+        
+        // karena batas titik waypoint atau titik lalu google maps hanya 25, maka tidak semua waypoint akan ditambahkan
+        // waypooint dengan urutan ganjil saja yang akan ditambahkan dan maksimal 25 waypoint
         // masukkan waypoint
-        waypts.push({
-          location: new google.maps.LatLng(parseFloat(list_koordinat[x].latitude_tempat), parseFloat(list_koordinat[x].longitude_tempat)),
-          stopover: true
-        });
+        if(waypts.length <= 25)
+        {
+          // titik awal, titik akhir serta titik ganjil ditambahkan ke waypoints
+          if(x == 0 || x == (list_koordinat.length - 1) || x % 2 != 0)
+          {
+            if(waypts.length  == 24)
+            {
+              waypts.push({
+                location: new google.maps.LatLng(parseFloat(list_koordinat[(list_koordinat.length - 1)].latitude_tempat), parseFloat(list_koordinat[(list_koordinat.length - 1)].longitude_tempat)),
+                stopover: true
+              });
+            }
+            else
+            {
+              waypts.push({
+                location: new google.maps.LatLng(parseFloat(list_koordinat[x].latitude_tempat), parseFloat(list_koordinat[x].longitude_tempat)),
+                stopover: true
+              });
+            }
+            
+          }
+        }
       }
             
       // Instantiate a directions service.
@@ -237,7 +257,11 @@
       var directionsDisplay = new google.maps.DirectionsRenderer({
         map: peta
       });
-  
+      
+      console.log(titik_awal);
+      console.log(titik_akhir);
+      console.log(waypts);
+      
       // get route from A to B
       directionsService.route({
         origin: titik_awal,
