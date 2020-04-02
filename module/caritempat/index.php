@@ -44,6 +44,7 @@
         <div class="col-12 mb-5 mt-5" id="hasil_pencarian_rute" style="display: none;">
           <h2>Hasil Pencarian Rute</h2>
           <hr>
+          <p id="waktu_berjalan"></p>
           <div id="konten_hasil_rute">
             <div id="waktu_berjalan" style="font-weight: bold; font-size: 12pt;"></div>
             <div id="hasil_rute">
@@ -57,25 +58,67 @@
               </ul>
               <!-- Tab panes -->
               <div class="tab-content">
-                <div id="tampilan_jaringan" class="container tab-pane active"><br>
+                <div id="tampilan_jaringan" class="container tab-pane active" style="border: 1px solid #dee2e6; border-top: 0px"><br>
                   <h3>Tampilan Rute Dengan Jaringan</h3>
-                  <div id="hasil_jaringan" style="width:100%;height:500px;border: 1px solid lightgray;"></div>
+                  <div id="hasil_jaringan" style="width:100%;height:500px;"></div>
                 </div>
-                <div id="tampilan_peta" class="container tab-pane fade"><br>
+                <div id="tampilan_peta" class="container tab-pane fade" style="border: 1px solid #dee2e6; border-top: 0px"><br>
                   <h3>Tampilan Rute Dengan Peta</h3>
-                  <div id="hasil_pencarian" style="width:100%;height:500px;border: 1px solid lightgray;"></div>
+                  <div id="hasil_pencarian" style="width:100%;height:500px;"></div>
                 </div>
               </div>
+              <br>
             </div>
+            <br>
             <button type="button" class="btn btn-primary btn-block" onclick="togglePencarian()">Cari Ulang</button>
           </div>
         </div>
     </div>
 </div>
+
+<!-- modal -->
+<div class="modal" tabindex="-1" role="dialog" id="modal_wisata">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Detail Objek Wisata</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <div class="form-label-group">
+            <label>Nama</label>
+            <p id="nama_tempat"></p>
+          </div>
+          <div class="form-label-group">
+            <label>Deskripsi</label>
+            <p id="deskripsi_tempat"></p>
+          </div>
+          <div class="form-label-group">
+            <label>Alamat</label>
+            <p id="alamat_tempat"></p>
+          </div>
+          <div class="form-label-group">
+            <label>Foto</label>
+            <p id="foto_tempat"></p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script src="assets/js/axios.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSnFipxaBhQcKE_i8itckeTlY3cbOh9TE"></script>
 <script>
   var network;
+  var selisih_waktu = 0;
   var waktu_berjalan;
   var list_tempat = <?=json_encode($DB->query("SELECT * FROM tb_tempat ORDER BY nama_tempat ASC")->fetchAll(PDO::FETCH_ASSOC))?>;
   var titik = <?=json_encode($DB->query("SELECT id_tempat AS id, nama_tempat AS label FROM tb_tempat ORDER BY nama_tempat ASC")->fetchAll(PDO::FETCH_ASSOC))?>;
@@ -106,8 +149,9 @@
             map: map,
             //~ label: list_tempat[x].nama_tempat
         });
-        list_marker[x].addListener('click', function() {
-          // event click marker
+        var informasi_wisata = list_tempat[x];
+        list_marker[x].addListener('click', function(){
+          tampilInformasiWisata(informasi_wisata); 
         });
     }
   }
@@ -174,22 +218,12 @@
         if(x == 0)
         {
           // masukkan titik awal
-          titik_awal = new google.maps.Marker({
-            position: new google.maps.LatLng(parseFloat(list_koordinat[x].latitude_tempat), parseFloat(list_koordinat[x].longitude_tempat)),
-            title: "Titik Awal",
-            label: "Titik Awal",
-            map: peta
-          })
+          titik_awal = cariMarker(list_koordinat[x].id_tempat);
         }
         else if(x == (list_koordinat.length - 1))
         {
           // masukan titik akhir
-          titik_akhir = new google.maps.Marker({
-            position: new google.maps.LatLng(parseFloat(list_koordinat[x].latitude_tempat), parseFloat(list_koordinat[x].longitude_tempat)),
-            title: "Titik Akhir",
-            label: "Titik Akhir",
-            map: peta
-          })
+          titik_akhir = cariMarker(list_koordinat[x].id_tempat);
         }
         // masukkan waypoint
         waypts.push({
@@ -197,9 +231,7 @@
           stopover: true
         });
       }
-      
-      console.log(waypts);
-      
+            
       // Instantiate a directions service.
       var directionsService = new google.maps.DirectionsService;
       var directionsDisplay = new google.maps.DirectionsRenderer({
@@ -275,16 +307,27 @@
   }
   
   function tampilkanWaktu(id_dom){
-    var waktu = parseInt(new Date().getTime())/1000;
-    document.getElementById(id_dom).innerHTML = waktu;
+    document.getElementById(id_dom).innerHTML = "Waktu proses : " + (selisih_waktu/1000) + " detik";
   }
   
   function jalankanWaktu() {
-    waktu = setInterval(tampilkanWaktu, 100);
+    selisih_waktu += 10;
+    waktu = setInterval(function(){
+      tampilkanWaktu("waktu_berjalan");
+    }, 10);
   }
   
   function stopWaktu(){
     clearInterval(waktu);
+    selisih_waktu = 0;
+  }
+  
+  function tampilInformasiWisata(data)
+  {
+    $("#modal_wisata").modal("show");
+    document.getElementById("nama_tempat").innerHTML = data.nama_tempat;
+    document.getElementById("deskripsi_tempat").innerHTML = data.deskripsi_tempat;
+    document.getElementById("alamat_tempat").innerHTML = data.alamat_tempat + ", Kel. ..., Kec. , Provinsi ";
   }
   
   function togglePencarian(){
@@ -305,6 +348,18 @@
       display_hasil_pencarian.style.display = "none";
       display_hasil_pencarian.style.visibility = "hidden";
     }
+  }
+  
+  function cariMarker(id)
+  {
+    for(var x = 0; x < list_tempat.length; x++)
+    {
+      if(list_tempat[x].id_tempat == id)
+      {
+        return list_marker[x];
+      }
+    }
+    return null;
   }
   
   document.getElementsByName("simpan")[0].addEventListener("click", function(){
