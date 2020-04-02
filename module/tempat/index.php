@@ -15,8 +15,9 @@
                             <th>Nama Tempat</th>
                             <th>Deskripsi</th>
                             <th>Alamat</th>
-                            <th>Latitude</th>
-                            <th>Longitude</th>
+                            <th>Koordinat</th>
+                            <th>Kontak</th>
+
                             <th width="190px">Aksi</th>
                         </tr>
                     </thead>
@@ -28,11 +29,29 @@
                             <tr>
                                 <td><?php echo $data['id_tempat']; ?></td>
                                 <td><?php echo $data['nama_tempat']; ?></td>
-                                <td><?php echo $data['deskripsi_tempat']; ?></td>
-                                <td><?php echo $data['alamat_tempat']; ?></td>
-                                <td><?php echo $data['latitude_tempat']; ?></td>
-                                <td><?php echo $data['longitude_tempat']; ?></td>
+                                <td>
+                                    <img src="assets/foto/<?php echo $data['foto']; ?>" alt="-" width="100px">
+                                    <br>
+                                    <?php echo $data['deskripsi_tempat']; ?>
+                                </td>
+                                <td>
+                                    <ul>
+                                        <li>Provinsi : <?php echo $data['provinsi']; ?></li>
+                                        <li>Kab/Kota : <?php echo $data['kabkota']; ?></li>
+                                        <li>Kecamatan : <?php echo $data['kecamatan']; ?></li>
+                                        <li>Alamat : <?php echo $data['alamat_tempat']; ?></li>
+                                    </ul>
 
+                                </td>
+                                <td>
+                                    <ul>
+                                        <li>Latitude : <?php echo $data['latitude_tempat']; ?></li>
+                                        <li>Longitude : <?php echo $data['longitude_tempat']; ?></li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <?php echo $data['kontak'] ?>
+                                </td>
                                 <td>
                                     <a href="index.php?page=module/tempat/jarak_terkait&id=<?php echo $data['id_tempat'];  ?> " class="btn btn-success btn-sm">Jarak Terkait</a>
                                     <a href="index.php?page=module/tempat/edit&id=<?php echo $data['id_tempat'];  ?> " class="btn btn-warning btn-sm">Edit</a>

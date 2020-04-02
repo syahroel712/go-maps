@@ -31,11 +31,12 @@
   ?>
 
   <?php include 'components/scripts.php' ?>
-  
+
   <script>
     $(document).ready(function() {
       $('.select2').select2({
         theme: 'bootstrap4',
+        tags: true,
       });
     });
   </script>
