@@ -338,11 +338,12 @@
   }
 
   function tampilkanWaktu(id_dom) {
-    document.getElementById(id_dom).innerHTML = "Waktu proses : " + (selisih_waktu / 1000) + " detik";
+    var angka = (selisih_waktu / 1000).toString().substring(0,5);
+    document.getElementById(id_dom).innerHTML = "Waktu proses : " + angka + " detik";
   }
 
   function jalankanWaktu() {
-    selisih_waktu += parseFloat(Math.random()) * 10000 + parseFloat(100);
+    selisih_waktu += parseFloat(Math.random()) * 100 + parseFloat(100);
     waktu = setInterval(function() {
       tampilkanWaktu("waktu_berjalan");
     }, 10);
