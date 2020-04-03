@@ -7,11 +7,13 @@
             <br>
             <br>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <p><b><i>*Klik pada peta untuk menggeser marker</i></b></p>
                     <div id="googleMap" style="width:100%;height:380px;"></div>
                 </div>
-
+                <div class="col-md-12">
+                    <hr>
+                </div>
                 <div class="col-md-6">
                     <form method="POST" enctype="multipart/form-data">
                         <div class="form-group">
@@ -22,57 +24,140 @@
                         </div>
                         <div class="form-group">
                             <div class="form-label-group">
-                                <label>Deskripsi Tempat</label>
-                                <textarea name="deskripsi_tempat" class="form-control" cols="30" rows="6"></textarea>
+                                <label>Provinsi</label>
+                                <select name="provinsi" id="provinsi" class="form-control select2">
+                                    <option value="">Pilih Provinsi</option>
+                                    ?>
+                                    <?php
+                                    $data_tempat = $DB->query("SELECT DISTINCT provinsi FROM tb_tempat ORDER BY provinsi ASC");
+                                    foreach ($data_tempat as $no => $data) {
+                                    ?>
+                                        <option value="<?php echo $data['provinsi'] ?>"><?php echo $data['provinsi'] ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                <label>Kab/Kota</label>
+                                <select name="kabkota" id="kabkota" class="form-control select2">
+                                    <option value="">Pilih Kab/Kota</option>
+                                    ?>
+                                    <?php
+                                    $data_tempat = $DB->query("SELECT DISTINCT kabkota FROM tb_tempat ORDER BY kabkota ASC");
+                                    foreach ($data_tempat as $no => $data) {
+                                    ?>
+                                        <option value="<?php echo $data['kabkota'] ?>"><?php echo $data['kabkota'] ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                <label>Kecamatan</label>
+                                <select name="kecamatan" id="kecamatan" class="form-control select2">
+                                    <option value="">Pilih Kecamatan</option>
+                                    ?>
+                                    <?php
+                                    $data_tempat = $DB->query("SELECT DISTINCT kecamatan FROM tb_tempat ORDER BY kecamatan ASC");
+                                    foreach ($data_tempat as $no => $data) {
+                                    ?>
+                                        <option value="<?php echo $data['kecamatan'] ?>"><?php echo $data['kecamatan'] ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="form-label-group">
                                 <label>Alamat Tempat</label>
-                                <textarea name="alamat_tempat" class="form-control" cols="30" rows="6"></textarea>
+                                <textarea name="alamat_tempat" class="form-control" cols="30" rows="3"></textarea>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <label>Latitude</label>
-                                <input name="latitude_tempat" id="latitude_tempat" type="text" class="form-control" autofocus="autofocus">
-                            </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="form-label-group">
+                            <label>Deskripsi Tempat</label>
+                            <textarea name="deskripsi_tempat" class="form-control" cols="30" rows="3"></textarea>
                         </div>
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <label>Longitude</label>
-                                <input name="longitude_tempat" id="longitude_tempat" type="text" class="form-control" autofocus="autofocus">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-label-group">
+                            <label>Kontak</label>
+                            <input name="kontak" id="kontak" type="text" class="form-control" autofocus="autofocus">
                         </div>
-
-                        <button name="simpan" class="btn btn-primary btn-block">SIMPAN</button>
-                    </form>
-
-                    <?php
-                    if (isset($_POST['simpan'])) {
-                        $data = array(
-                            ":nama_tempat" => $_POST['nama_tempat'],
-                            ":deskripsi_tempat" => $_POST['deskripsi_tempat'],
-                            ":alamat_tempat" => $_POST['alamat_tempat'],
-                            ":latitude_tempat" => $_POST['latitude_tempat'],
-                            ":longitude_tempat" => $_POST['longitude_tempat'],
-                        );
-                        // var_dump($data);
-                        // exit;
-                        $simpan = $DB->query("INSERT INTO tb_tempat(nama_tempat, deskripsi_tempat, alamat_tempat, latitude_tempat, longitude_tempat) VALUES (:nama_tempat, :deskripsi_tempat, :alamat_tempat, :latitude_tempat, :longitude_tempat)", $data);
-                        if ($simpan) {
-                            echo "<script>alert('Data Disimpan');
-                            window.location='index.php?page=module/tempat/index';
-                            </script>";
-                        } else {
-                            echo "<script>alert('Data Tidak Disimpan');
-                            window.location='index.php?page=module/tempat/index';
-                            </script>";
-                        }
-                    }
-                    ?>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-label-group">
+                            <label>Foto</label>
+                            <input name="foto" id="foto" type="file" class="form-control" autofocus="autofocus">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-label-group">
+                            <label>Latitude</label>
+                            <input name="latitude_tempat" id="latitude_tempat" type="text" class="form-control" autofocus="autofocus">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-label-group">
+                            <label>Longitude</label>
+                            <input name="longitude_tempat" id="longitude_tempat" type="text" class="form-control" autofocus="autofocus">
+                        </div>
+                    </div>
 
                 </div>
+                <div class="col-md-12">
+                    <button name="simpan" class="btn btn-primary btn-block">SIMPAN</button>
+                </div>
+                </form>
+
+                <?php
+                if (isset($_POST['simpan'])) {
+
+                    $nama_foto    = $_FILES['foto']['name'];
+                    $lokasi_foto  = $_FILES['foto']['tmp_name'];
+
+                    $file_name = explode('.', $nama_foto);
+                    $nama_file = end($file_name);
+                    $file_ext = strtolower($nama_file);
+                    $nama_file_foto = str_replace(" ", "-", $file_name[0]) . "-" . substr(uniqid('', true), -5) . "." . $file_ext;
+
+                    $data = array(
+                        ":nama_tempat" => $_POST['nama_tempat'],
+                        ":deskripsi_tempat" => $_POST['deskripsi_tempat'],
+                        ":alamat_tempat" => $_POST['alamat_tempat'],
+                        ":latitude_tempat" => $_POST['latitude_tempat'],
+                        ":longitude_tempat" => $_POST['longitude_tempat'],
+                        ":provinsi" => $_POST['provinsi'],
+                        ":kabkota" => $_POST['kabkota'],
+                        ":kecamatan" => $_POST['kecamatan'],
+                        ":kontak" => $_POST['kontak'],
+                        ":foto" => $nama_file_foto,
+                    );
+                    // var_dump($data);
+                    // exit;
+                    move_uploaded_file($lokasi_foto, "assets/foto/$nama_file_foto");
+
+                    $simpan = $DB->query("INSERT INTO tb_tempat(nama_tempat, deskripsi_tempat, alamat_tempat, latitude_tempat, longitude_tempat, provinsi, kabkota, kecamatan, kontak, foto) VALUES (:nama_tempat, :deskripsi_tempat, :alamat_tempat, :latitude_tempat, :longitude_tempat, :provinsi, :kabkota, :kecamatan, :kontak, :foto)", $data);
+                    if ($simpan) {
+                        echo "<script>alert('Data Disimpan');
+                            window.location='index.php?page=module/tempat/index';
+                            </script>";
+                    } else {
+                        echo "<script>alert('Data Tidak Disimpan');
+                            window.location='index.php?page=module/tempat/index';
+                            </script>";
+                    }
+                }
+                ?>
+
             </div>
         </div>
     </div>
