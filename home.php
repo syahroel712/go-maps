@@ -5,7 +5,7 @@
     <div class="row">
 
         <div class="col-md-12 mb-5">
-            <h2>Go Maps</h2>
+            <h2>Aplikasi Cari Rute Wisata</h2>
             <hr>
             <p>
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia minima quaerat odit suscipit! Vero voluptatum similique id repellendus obcaecati exercitationem voluptatem autem fugit, eos, necessitatibus esse? Aliquam laudantium culpa deleniti.

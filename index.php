@@ -7,7 +7,7 @@ ob_start();
 
 <head>
 
-  <title>Go-maps</title>
+  <title>Aplikasi Cari Rute Wisata</title>
   <?php include 'components/head.php' ?>
   <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
   <link href="assets/css/select2-bootstrap4.min.css" rel="stylesheet" />
