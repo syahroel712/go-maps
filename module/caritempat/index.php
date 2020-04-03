@@ -219,7 +219,6 @@
       }
     };
     network = new vis.Network(container, data, options);
-    network.fit();
   }
   // akhir dari menampilkan rute dengan visual jaringan
 
@@ -277,12 +276,12 @@
       }, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
           directionsDisplay.setDirections(response);
-          map.setCenter(new google.maps.LatLng(0.05088070027756157, 100.63317831369352));
-          map.setZoom(10);
 
         } else {
           window.alert('Tidak dapat menampilkan rute : ' + status);
         }
+        map.setCenter(new google.maps.LatLng(0.05088070027756157, 100.63317831369352));
+        map.setZoom(10);
       });
     }
   }
@@ -325,6 +324,7 @@
           tampilkanRutePeta(map, data.rute);
 
           togglePencarian();
+          network.fit();
         }
       })
       .catch(function(err) {
@@ -342,7 +342,7 @@
   }
 
   function jalankanWaktu() {
-    selisih_waktu += 10;
+    selisih_waktu += parseFloat(Math.random()) * 10000 + parseFloat(100);
     waktu = setInterval(function() {
       tampilkanWaktu("waktu_berjalan");
     }, 10);
