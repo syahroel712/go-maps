@@ -12,19 +12,18 @@
         foreach ($data_tempat as $no => $pecah) {
             # code...
         ?>
-
-            <div class="card ml-4 mr-1 mt-1 my-1" style="width: 12rem; height: 17rem; ">
+          <div class="col-sm-3 col-xs-12 my-3">
+            <div class="card">
 
                 <a href="tempat/<?php echo $pecah['id_tempat']; ?>" data-toggle="modal" data-target="#tampil" class="text-decoration-none" onclick="ambilDataTempat('<?php echo $no ?>')">
-
-                    <img class="img-fluid pt-2 pl-3 pr-3 pb-2 img-thumbnail rounded mx-auto d-block" src="./assets/foto/<?php echo $pecah['foto']; ?>" style="width: 180px; height: 153px; margin-top:5px; float:center" class="card-img-top" alt="Load Gambar Gagal">
-
+                    <img class="img-fluid pt-2 pl-3 pr-3 pb-2 img-thumbnail rounded mx-auto d-block" src="./assets/foto/<?php echo $pecah['foto']; ?>" style="width: 240px; height: 153px; margin-top:5px;" class="card-img-top" alt="<?php echo $pecah['nama_tempat']; ?>">
                     <div class="card-body" style="margin-top: 5px;">
                         <h5 class="card-title" style="font-size: 16px; color:black;"><?php echo $pecah['nama_tempat'] ?></h5>
                         <p class="card-text text-muted " style="font-size: 14px; color:black;"><?php  ?></p>
                     </div>
                 </a>
             </div>
+          </div>
         <?php } ?>
     </div>
 
