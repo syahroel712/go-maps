@@ -1,6 +1,7 @@
-<?php 
+<?php
 include "config/koneksi.php";
 ob_start();
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +49,7 @@ ob_start();
 </html>
 
 <?php
-  $output = ob_get_contents();
-  ob_end_clean();
-  echo $output;
+$output = ob_get_contents();
+ob_end_clean();
+echo $output;
 ?>
