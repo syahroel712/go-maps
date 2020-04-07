@@ -52,9 +52,11 @@
             <li class="nav-item">
               <a class="nav-link active" data-toggle="tab" href="#tampilan_jaringan">Tampilan Jaringan</a>
             </li>
+<!--
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#tampilan_peta">Tampilan Peta</a>
             </li>
+-->
           </ul>
           <!-- Tab panes -->
           <div class="tab-content">
@@ -134,8 +136,6 @@
     </div>
   </div>
 </div>
-
-
 <script src="assets/js/axios.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSnFipxaBhQcKE_i8itckeTlY3cbOh9TE"></script>
 <script>
@@ -321,7 +321,7 @@
 
           // tampilkan semua titik dalam bentuk jaringan
           tampilkanRuteJaringan(titik_hasil_pencarian, titik_hubungan_hasil_pencarian, 'hasil_jaringan');
-          tampilkanRutePeta(map, data.rute);
+          //~ tampilkanRutePeta(map, data.rute);
 
           togglePencarian();
           network.fit();
@@ -405,6 +405,6 @@
 
 
 
-  initMap("hasil_pencarian"); // tampilkan marker bawaan dengan peta
+  //~ initMap("hasil_pencarian"); // tampilkan marker bawaan dengan peta
   //~ tampilkanRuteJaringan(titik, titik_hubungan, 'hasil_jaringan'); // tampilkan tampilan jaringan bawaan
 </script>
