@@ -7,6 +7,7 @@
             <hr>
             <div class="table-responsive">
                 <a href="?page=module/tempat/tambah" class="btn btn-primary ">Tambah Data</a>
+                <a href="?page=module/tempat/atur_posisi_tempat" class="btn btn-success">Atur Posisi Tempat</a>
                 <br><br>
                 <table class="table table-bordered" id="example" width="100%" cellspacing="0">
                     <thead>

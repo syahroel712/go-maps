@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Level</label>
-                            <select name="level" class="form-control">
+                            <select name="level" class="form-control select2">
                                 <option value="admin">Admin</option>
                                 <option value="user">User</option>
                             </select>
