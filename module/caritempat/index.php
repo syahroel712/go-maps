@@ -306,7 +306,9 @@
             // tambah lokasi sebagai titik untuk ditampilkan dalam mode jaringan
             titik_hasil_pencarian.push({
               id: data.rute[x].id_tempat,
-              label: data.rute[x].nama_tempat
+              label: data.rute[x].nama_tempat,
+              x: data.rute[x].x,
+              y: data.rute[x].y
             });
 
             // membuat hubungan titik

@@ -33,7 +33,7 @@ $data_tempat = $DB->query("SELECT * FROM tb_tempat WHERE id_tempat = :id_tempat 
                         <div class="form-group">
                             <div class="form-label-group">
                                 <label>Nama Tempat Tujuan</label>
-                                <select name="id_tujuan" id="" class="form-control">
+                                <select name="id_tujuan" id="" class="form-control select2">
                                     <option value="">Pilih Tempat</option>
                                     ?>
                                     <?php
@@ -96,7 +96,7 @@ $data_tempat = $DB->query("SELECT * FROM tb_tempat WHERE id_tempat = :id_tempat 
         </div>
     </div>
 </div>
-<script src="http://maps.googleapis.com/maps/api/js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBSnFipxaBhQcKE_i8itckeTlY3cbOh9TE"></script>
 <script>
     // variabel global marker
     var marker;
